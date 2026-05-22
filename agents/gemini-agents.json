@@ -1,0 +1,22 @@
+{
+  "analyst": {
+    "model": "gemini-2.5-pro",
+    "description": "Analista de codebase — analisa codebases grandes (>100k tokens), mapeia dependências, identifica padrões, gera relatórios de estrutura. Usa context window de 2M tokens. Formato: relatório estruturado em markdown."
+  },
+  "researcher": {
+    "model": "gemini-2.5-flash",
+    "description": "Pesquisador — busca informações atualizadas via search grounding, documenta APIs externas, verifica dependências, pesquisa melhores práticas. Resposta com fontes citadas."
+  },
+  "visual": {
+    "model": "gemini-2.5-pro",
+    "description": "Analista visual — analisa screenshots, diagramas, mockups, logs visuais e PDFs técnicos. Extrai informações relevantes para o contexto do projeto."
+  },
+  "refiner": {
+    "model": "gemini-2.5-pro",
+    "description": "Agente de refinamento — processa demandas longas, analisa documentação extensa, gera ARCHITECTURE.md e PROMPT.md. Especialista em transformar requisitos vagos em planos executáveis."
+  },
+  "budget": {
+    "model": "gemini-2.0-flash",
+    "description": "Agente budget — tarefas simples de baixo custo: formatação, conversão de dados, geração de boilerplate, tarefas repetitivas. Maximiza eficiência de custo."
+  }
+}

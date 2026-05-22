@@ -1,0 +1,57 @@
+{
+  "modelDefaults": {
+    "defaultModel": "claude-sonnet-4-5",
+    "fallbackModel": "claude-haiku-4-5-20251001"
+  },
+  "tokenOptimization": {
+    "enabled": true,
+    "contextSegmentation": {
+      "maxContextSize": 50000,
+      "archiveSession": true,
+      "archiveThreshold": 45000
+    },
+    "outputPreferences": {
+      "defaultLength": "brief",
+      "preferStructured": true,
+      "preferredFormats": ["markdown", "tables", "bullets", "code blocks"],
+      "avoidFormats": ["prose paragraphs", "long explanations", "full file pastes"]
+    }
+  },
+  "workflowDefaults": {
+    "segmentation": {
+      "enabled": true,
+      "phasePerSession": true,
+      "commitAfterPhase": true
+    },
+    "modelRouting": {
+      "enabled": true,
+      "rules": {
+        "architecture": "claude-sonnet-4-5",
+        "implementation": "claude-sonnet-4-5",
+        "testing": "claude-haiku-4-5-20251001",
+        "review": "claude-haiku-4-5-20251001",
+        "documentation": "claude-haiku-4-5-20251001",
+        "debugging": "claude-haiku-4-5-20251001",
+        "validation": "claude-haiku-4-5-20251001"
+      }
+    },
+    "statusTracking": {
+      "enabled": true,
+      "updateAfterPhase": true,
+      "trackTokens": true
+    }
+  },
+  "cliDefaults": {
+    "effort": "high",
+    "permissionMode": "auto",
+    "model": "claude-sonnet-4-5",
+    "allowedTools": ["bash", "edit", "read"],
+    "excludedTools": []
+  },
+  "monitoring": {
+    "trackTokensPerSession": true,
+    "trackTokensPerTask": true,
+    "trackCostPerPhase": true,
+    "alertThreshold": 10000
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "modelDefaults": {
+    "defaultModel": "gemini-2.5-flash",
+    "highCapabilityModel": "gemini-2.5-pro",
+    "budgetModel": "gemini-2.0-flash"
+  },
+  "modelRouting": {
+    "enabled": true,
+    "rules": {
+      "codebaseAnalysis": "gemini-2.5-pro",
+      "longContext": "gemini-2.5-pro",
+      "multimodal": "gemini-2.5-pro",
+      "refinement": "gemini-2.5-pro",
+      "research": "gemini-2.5-flash",
+      "search": "gemini-2.5-flash",
+      "general": "gemini-2.5-flash",
+      "formatting": "gemini-2.0-flash",
+      "simple": "gemini-2.0-flash"
+    }
+  },
+  "contextLimits": {
+    "gemini-2.5-pro": 2000000,
+    "gemini-2.5-flash": 1000000,
+    "gemini-2.0-flash": 1000000
+  },
+  "capabilities": {
+    "searchGrounding": {
+      "enabled": true,
+      "preferredFor": ["research", "versioning", "api-docs"]
+    },
+    "multimodal": {
+      "enabled": true,
+      "supportedTypes": ["image/png", "image/jpeg", "image/gif", "application/pdf"],
+      "preferredFor": ["screenshots", "diagrams", "mockups", "pdf-docs"]
+    },
+    "codeExecution": {
+      "enabled": false,
+      "note": "Habilite se usar Gemini para executar código"
+    }
+  },
+  "outputPreferences": {
+    "defaultLength": "brief",
+    "preferStructured": true,
+    "citeSources": true,
+    "includeConfidence": false
+  },
+  "workflowIntegration": {
+    "readStatusMdOnStart": true,
+    "referenceArchitectureMd": true,
+    "suggestClaudeForImplementation": true
+  }
+}

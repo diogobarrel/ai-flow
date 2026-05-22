@@ -1,0 +1,22 @@
+{
+  "main": {
+    "model": "claude-sonnet-4-5",
+    "description": "Engenheiro principal — decisões de arquitetura, lógica complexa, implementação core, decisões não planejadas. Referencia sempre ARCHITECTURE.md antes de implementar."
+  },
+  "validator": {
+    "model": "claude-haiku-4-5-20251001",
+    "description": "Validador de código — checagem de sintaxe, execução de testes, linting, validação de output. Respostas breves e acionáveis. Formato: tabela de resultados."
+  },
+  "documenter": {
+    "model": "claude-haiku-4-5-20251001",
+    "description": "Agente de documentação — escreve comentários inline, docstrings, seções de README, atualiza STATUS.md. Foco em clareza e consistência com ARCHITECTURE.md."
+  },
+  "debugger": {
+    "model": "claude-haiku-4-5-20251001",
+    "description": "Agente de debugging — analisa falhas de teste e erros, propõe correções concretas. Sempre mostra stack trace completo e hipótese de causa raiz."
+  },
+  "reviewer": {
+    "model": "claude-haiku-4-5-20251001",
+    "description": "Revisor de código — qualidade, aderência à arquitetura, boas práticas, padrões. Específico sobre problemas encontrados. Formato: checklist de issues."
+  }
+}
