@@ -27,6 +27,18 @@ Demanda
 
 ---
 
+## Ferramentas e custo real
+
+| Ferramenta | Modelo | Tipo de custo | Quando usar |
+|---|---|---|---|
+| claude-cli | claude-sonnet-4-6 | Assinatura PRO | Default — implementação, arquitetura, debugging |
+| gemini-cli | Gemini 2.5 Pro/Flash | Assinatura PRO | Contexto longo, pesquisa web, multimodal |
+| pi terminal | Kimi-2.6 (OpenRouter) | **Créditos** (custo real) | Fallback quando quota L1 esgotada |
+
+> Pi é o único ponto de custo real por token no fluxo. Use-o quando claude-cli ou gemini não estiverem disponíveis, não como primeira opção.
+
+---
+
 ## Fluxo diário recomendado
 
 ### 1. Planejamento (5-10 min)
@@ -139,6 +151,30 @@ git commit -m "Initial: architecture and implementation plan"
 
 ---
 
+## Quando trocar de ferramenta mid-session
+
+Troque de ferramenta quando:
+- Mensagem de quota esgotada no claude-cli → mude para gemini-cli
+- Quota gemini também esgotada → mude para pi (consome créditos)
+- Contexto > 100k tokens → mude para gemini independente de quota
+- Sessão travada por limite → encerre, atualize STATUS.md, abra na próxima ferramenta
+
+**Nunca carregue contexto do chat ao trocar.** Escreva o estado nos artefatos primeiro.
+
+### Prompt de abertura ao trocar de ferramenta
+
+Use este prompt ao abrir qualquer ferramenta após uma troca:
+
+```
+Leia ARCHITECTURE.md e STATUS.md.
+Fase atual: [X] — [nome da fase].
+Retomando de: [ferramenta anterior].
+Próximo passo: [tarefa específica].
+Liste ambiguidades antes de implementar.
+```
+
+---
+
 ## Segmentação de sessão
 
 **Regra principal:** uma fase por sessão. Não tente fazer tudo em uma sessão longa.
@@ -181,6 +217,7 @@ git commit -m "Phase X: descrição"
 | Analisar screenshot | `./scripts/gemini-start.sh visual` | Gemini 2.5 Pro |
 | Refinamento | `./scripts/claude-start.sh refinement` | Claude Sonnet |
 | Tarefa simples/budget | `./scripts/gemini-start.sh budget` | Gemini 2.0 Flash |
+| Fallback de quota | pi | Kimi-2.6 (OpenRouter) |
 
 Ver [model-routing.md](model-routing.md) para guia detalhado.
 
