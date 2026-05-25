@@ -166,7 +166,7 @@ Troque de ferramenta quando:
 Use este prompt ao abrir qualquer ferramenta após uma troca:
 
 ```
-Leia ARCHITECTURE.md e STATUS.md.
+Leia ARCHITECTURE.md, STATUS.md e PROMPT.md.
 Fase atual: [X] — [nome da fase].
 Retomando de: [ferramenta anterior].
 Próximo passo: [tarefa específica].
