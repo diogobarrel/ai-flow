@@ -122,19 +122,38 @@ Guia detalhado para selecionar o modelo certo por tipo de tarefa, com justificat
 
 ---
 
+---
+
+### Pi terminal / Kimi-2.6 — Fallback de quota
+
+**Use para:**
+- Implementação iterativa quando quota claude-cli ou gemini esgotada
+- Sessões conversacionais mid-complexity
+- Qualquer tarefa que precise de um agente cloud disponível agora
+
+**Não use para:**
+- Tarefas que podem esperar quota claude-cli ser restaurada (evite custo)
+- Análise de contexto muito longo (sem vantagem sobre Claude em contexto curto)
+
+**Limitação importante:** modelos locais Ollama testados e incompatíveis com Pi terminal. Único modelo disponível é Kimi-2.6 via OpenRouter.
+
+**Custo:** créditos OpenRouter — único custo real por token no fluxo atual.
+
+---
+
 ## Matriz de capacidades
 
-| Capacidade | Claude Sonnet | Claude Haiku | Gemini 2.5 Pro | Gemini 2.5 Flash | Gemini 2.0 Flash |
-|---|---|---|---|---|---|
-| Context window | 200k | 200k | **2M** | 1M | 1M |
-| Qualidade de código | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| Instruction-following | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| Velocidade | Médio | Rápido | Médio | **Muito rápido** | **Mais rápido** |
-| Custo relativo | 3x | 1x | 3-4x | 0.5x | **0.1x** |
-| Search grounding | ❌ | ❌ | ✅ | ✅ | ✅ |
-| Multimodal | Limitado | ❌ | ✅⭐⭐⭐⭐⭐ | ✅⭐⭐⭐ | ✅⭐⭐ |
-| Raciocínio de código | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| Agente / tool use | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
+| Capacidade | Claude Sonnet | Claude Haiku | Gemini 2.5 Pro | Gemini 2.5 Flash | Gemini 2.0 Flash | Pi / Kimi-2.6 |
+|---|---|---|---|---|---|---|
+| Context window | 200k | 200k | **2M** | 1M | 1M | 128k |
+| Qualidade de código | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Instruction-following | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Velocidade | Médio | Rápido | Médio | **Muito rápido** | **Mais rápido** | Rápido |
+| **Tipo de custo** | **Assinatura** | **Assinatura** | **Assinatura** | **Assinatura** | **Assinatura** | **Créditos** |
+| Search grounding | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ |
+| Multimodal | Limitado | ❌ | ✅⭐⭐⭐⭐⭐ | ✅⭐⭐⭐ | ✅⭐⭐ | ❌ |
+| Raciocínio de código | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Agente / tool use | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
 
 ---
 
@@ -181,6 +200,9 @@ Precisa de dados de 2024 ou mais recentes?
 
 É tarefa trivial (formatar / gerar fixture)?
   → Gemini 2.0 Flash ou Claude Haiku
+
+Quota claude-cli E gemini esgotadas?
+  → Pi terminal (Kimi-2.6 via OpenRouter — consome créditos)
 
 Default?
   → Claude Sonnet
