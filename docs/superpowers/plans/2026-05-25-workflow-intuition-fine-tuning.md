@@ -118,7 +118,7 @@ git commit -m "feat: add golden log formatter with basic cleaning"
 **Files:**
 - Create: `src/fine_tuning/train.py`
 
-- [ ] **Step 1: Write training script using Unsloth**
+- [x] **Step 1: Write training script using Unsloth**
 
 ```python
 # src/fine_tuning/train.py
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     run_training("data/final_dataset.jsonl", "models/flow-orchestrator")
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add src/fine_tuning/train.py
