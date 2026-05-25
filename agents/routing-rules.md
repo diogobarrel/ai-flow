@@ -54,7 +54,7 @@ Tarefa recebida
 2. **gemini para volume e pesquisa** — contexto 2M e search grounding são diferenciais únicos.
 3. **pi é fallback de quota, não de qualidade** — consome créditos reais; reserve para quando L1 estiver indisponível.
 4. **Modelos locais não funcionam no Pi** — não tente usar Ollama via Pi terminal.
-5. **O bridge entre ferramentas é sempre ARCHITECTURE.md + STATUS.md** — nunca carregue contexto do chat ao trocar de ferramenta.
+5. **O bridge entre ferramentas é sempre ARCHITECTURE.md + PROMPT.md + STATUS.md** — nunca carregue contexto do chat ao trocar de ferramenta.
 
 ---
 
@@ -64,7 +64,7 @@ Ao trocar de ferramenta mid-session, preserve o contexto nos artefatos — não 
 
 **Prompt de abertura padrão (qualquer ferramenta):**
 ```
-Leia ARCHITECTURE.md e STATUS.md.
+Leia ARCHITECTURE.md, STATUS.md e PROMPT.md.
 Fase atual: [X]. Tarefa específica: [descrição].
 Liste ambiguidades antes de implementar.
 ```

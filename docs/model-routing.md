@@ -17,7 +17,7 @@ Guia detalhado para selecionar o modelo certo por tipo de tarefa, com justificat
 
 ## Claude: quando usar
 
-### Claude Sonnet 4.5 — Implementação e Arquitetura
+### Claude Sonnet 4.6 — Implementação e Arquitetura
 
 **Use para:**
 - Implementar features com lógica complexa
@@ -214,7 +214,7 @@ Default?
 
 | Modelo | Input (por 1M tokens) | Output (por 1M tokens) |
 |---|---|---|
-| Claude Sonnet 4.5 | ~$3 | ~$15 |
+| Claude Sonnet 4.6 | ~$3 | ~$15 |
 | Claude Haiku 4.5 | ~$0.25 | ~$1.25 |
 | Gemini 2.5 Pro | ~$1.25 | ~$10 |
 | Gemini 2.5 Flash | ~$0.075 | ~$0.30 |
@@ -232,8 +232,8 @@ No `config/claude-settings.json`:
 "modelRouting": {
   "enabled": true,
   "rules": {
-    "architecture": "claude-sonnet-4-5",
-    "implementation": "claude-sonnet-4-5",
+    "architecture": "claude-sonnet-4-6",
+    "implementation": "claude-sonnet-4-6",
     "testing": "claude-haiku-4-5-20251001",
     "review": "claude-haiku-4-5-20251001",
     "documentation": "claude-haiku-4-5-20251001"
