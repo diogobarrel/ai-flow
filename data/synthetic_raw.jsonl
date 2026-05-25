@@ -1,0 +1,3 @@
+{"instruction": "How do I bootstrap React?", "response": "According to WORKFLOW.md, you should use the relevant playbook for bootstrap React."}
+{"instruction": "How do I cleanup old project?", "response": "According to WORKFLOW.md, you should use the relevant playbook for cleanup old project."}
+{"instruction": "How do I commit branch?", "response": "According to WORKFLOW.md, you should use the relevant playbook for commit branch."}
