@@ -1,0 +1,9 @@
+{
+  "main": {
+    "model": "moonshotai/kimi-k2-5",
+    "provider": "openrouter",
+    "cost": "credits",
+    "description": "Único modelo funcional no Pi terminal. Alternativa quando quota claude-cli/gemini esgotada. Consome créditos OpenRouter — usar com critério de custo."
+  },
+  "_note_local_models": "Modelos Ollama locais testados e incompatíveis com Pi terminal. Sem fallback local disponível."
+}
