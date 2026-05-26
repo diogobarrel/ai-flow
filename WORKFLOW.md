@@ -12,7 +12,8 @@ Como eu desenvolvo código com IA usando o ferramental que já tenho, de forma e
 |---|---|---|---|
 | **Claude Code CLI** | Sonnet 4.6 (default), Haiku 4.5 | Assinatura PRO (sem custo/token) | PC |
 | **Gemini CLI** | Gemini 2.5 Pro (default), 2.5 Flash | Assinatura PRO (sem custo/token) | PC |
-| **Ollama** | qwen2.5-coder:7b, qwen2.5-coder:14b, gemma3:12b, llama3.2:3b | Grátis (GPU local) | PC, GTX 5070 Ti, 16GB VRAM |
+| **Hermes Agent** | hermes3:8b via Ollama (local orchestrator) | Grátis (GPU local) | PC, RTX 5070 Ti, 16GB VRAM |
+| **Ollama** | qwen2.5-coder:7b, qwen2.5-coder:14b, gemma3:12b, llama3.2:3b | Grátis (GPU local) | PC, RTX 5070 Ti, 16GB VRAM |
 | **Pi terminal + OpenRouter** | Kimi-2.6 (k2-5) | **Créditos** ($) | Pi |
 
 > Regra de ouro: **Pi/OpenRouter é o único caminho que custa dinheiro de verdade.** Tudo mais é assinatura ou local. Use Pi como fallback de quota, não como primeira opção.
@@ -44,8 +45,9 @@ Para pesquisa rápida com search grounding e custo zero de raciocínio, use Flas
 Coisas que faço várias vezes por semana e não exigem raciocínio profundo: gerar commit message a partir do diff, resumir um diff em 3 bullets, explicar um erro de stderr, classificar uma issue, draft de docstring.
 
 → **Local helper (Ollama)** — `flow-<comando>` no terminal. Lista em [`local-helpers/`](./local-helpers/).
+→ **Hermes Agent** — `hermes` no terminal para tarefas que se beneficiam de memória cross-session, execução de código, ou busca no codebase via RAG.
 
-Critério de promoção: se uma tarefa entra nessa categoria mas eu não tenho helper pra ela ainda, e fiz manualmente 3x → criar helper.
+Critério de promoção: se uma tarefa entra nessa categoria mas eu não tenho helper pra ela ainda, e fiz manualmente 3x → criar helper. Se exige contexto de sessões anteriores → usar Hermes.
 
 ### 4. Code review do meu próprio diff
 
@@ -209,13 +211,37 @@ ollama pull qwen2.5-coder:7b
 ollama pull qwen2.5-coder:14b
 ollama pull llama3.2:3b
 ollama pull gemma3:12b
+ollama pull hermes3:8b  # modelo para o Hermes Agent
+
+# Hermes Agent (orquestrador local com learning loop)
+curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+source ~/.bashrc
+
+# Configurar Hermes para usar Ollama local
+cp config/hermes-config-template.yaml ~/.hermes/config.yaml
+cp config/hermes-soul-template.md ~/.hermes/SOUL.md
+# (ajuste os caminhos em ~/.hermes/config.yaml se necessário)
+
+# Instalar skill REL no Hermes
+cp skills/rel-sync.md ~/.hermes/skills/rel-sync.md
 
 # Local helpers — adicionar ao PATH
-echo 'export PATH="$HOME/Dev/ai-flow/ai-dev-flow/local-helpers:$PATH"' >> ~/.bashrc
-# (no Windows: adicionar a pasta local-helpers ao PATH via System Properties)
+echo 'export PATH="$HOME/dev/ai-flow/local-helpers:$PATH"' >> ~/.bashrc
 ```
 
 Pi terminal: configurado separadamente, fora deste repo.
+
+## Learning Loop (Hermes + REL)
+
+O Hermes Agent adiciona três primitivas de aprendizado que o Open Interpreter não tinha:
+
+| Primitiva | Como usar |
+|---|---|
+| **Cross-session memory** | Automático — Hermes salva e recupera contexto entre sessões |
+| **Skill auto-creation** | Automático após tarefas complexas (5+ tool calls) |
+| **REL sync** | Manual: `/rel-sync` no Hermes, ou via `hermes cron` semanalmente |
+
+Para agendar o REL sync semanal, diga ao Hermes: `"Schedule /rel-sync every Friday at 9pm"`.
 
 ---
 

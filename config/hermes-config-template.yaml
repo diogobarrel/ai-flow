@@ -1,0 +1,22 @@
+# Hermes Agent config for ai-flow
+# Copy to ~/.hermes/config.yaml and adjust paths if needed.
+# Docs: https://hermes-agent.nousresearch.com/docs/user-guide/configuration
+
+model:
+  provider: custom
+  default: hermes3:8b          # pull with: ollama pull hermes3:8b
+  base_url: http://localhost:11434/v1
+  # api_key: ollama            # Ollama ignores this; set to any non-empty string if required
+
+# Alternative: keep using qwen2.5-coder which you already have
+# default: qwen2.5-coder:7b
+
+mcp_servers:
+  ai_flow_rag:
+    command: python3
+    args:
+      - /home/barrel/dev/ai-flow/src/mcp_rag_server.py
+    env:
+      PYTHONPATH: /home/barrel/dev/ai-flow/src
+      DEV_ROOT: /home/barrel/dev
+      CHROMA_DB_DIR: /home/barrel/.ai_flow_chroma

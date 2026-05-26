@@ -28,11 +28,18 @@ npm install -g @anthropic-ai/claude-code @google/gemini-cli
 claude && gemini auth login
 
 # Ollama + modelos
-ollama pull qwen2.5-coder:7b qwen2.5-coder:14b llama3.2:3b gemma3:12b
+ollama pull qwen2.5-coder:7b qwen2.5-coder:14b llama3.2:3b gemma3:12b hermes3:8b
+
+# Hermes Agent (orquestrador local com learning loop)
+curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+source ~/.bashrc
+cp config/hermes-config-template.yaml ~/.hermes/config.yaml
+cp config/hermes-soul-template.md ~/.hermes/SOUL.md
+cp skills/rel-sync.md ~/.hermes/skills/rel-sync.md
 
 # Local helpers no PATH
-echo 'export PATH="$HOME/Dev/ai-flow/ai-dev-flow/local-helpers:$PATH"' >> ~/.bashrc
-chmod +x ~/Dev/ai-flow/ai-dev-flow/local-helpers/*.sh
+echo 'export PATH="$HOME/dev/ai-flow/local-helpers:$PATH"' >> ~/.bashrc
+chmod +x ~/dev/ai-flow/local-helpers/*.sh
 ```
 
 Detalhes completos em [`WORKFLOW.md` §Setup mínimo](./WORKFLOW.md#setup-m%C3%ADnimo).
@@ -44,14 +51,19 @@ Detalhes completos em [`WORKFLOW.md` §Setup mínimo](./WORKFLOW.md#setup-m%C3%A
 | O quê | Onde |
 |---|---|
 | Decisão "tarefa → ferramenta" | [`WORKFLOW.md`](./WORKFLOW.md) |
+| Contexto do Hermes Agent (auto-carregado) | [`HERMES.md`](./HERMES.md) |
+| Config e SOUL templates para Hermes | [`config/hermes-config-template.yaml`](./config/hermes-config-template.yaml), [`config/hermes-soul-template.md`](./config/hermes-soul-template.md) |
+| Skill REL para Hermes | [`skills/rel-sync.md`](./skills/rel-sync.md) |
+| MCP RAG server (Hermes tool) | [`src/mcp_rag_server.py`](./src/mcp_rag_server.py) |
+| Pipeline REL (harvest → filter → train) | [`scripts/sync-intuition.sh`](./scripts/sync-intuition.sh) |
 | Receitas reutilizáveis | [`playbooks/`](./playbooks/) |
 | Scripts Ollama | [`local-helpers/`](./local-helpers/) |
 | System prompts | [`prompts/`](./prompts/) |
 | Configs das CLIs | [`config/`](./config/) |
-| Setup scripts (per-OS) | [`scripts/`](./scripts/) |
+| Setup scripts | [`scripts/`](./scripts/) |
 | Definições conceituais de agentes | [`agents/`](./agents/) |
 | Log de custo manual | [`cost.log`](./cost.log) |
-| Exploração arquitetural anterior (não construída) | [`docs/architecture/`](./docs/architecture/) — ver STATUS interno |
+| Exploração arquitetural anterior | [`docs/architecture/`](./docs/architecture/) — ver STATUS interno |
 | Iterações antigas consolidadas | [`docs/legacy/`](./docs/legacy/) |
 
 ---
@@ -59,6 +71,7 @@ Detalhes completos em [`WORKFLOW.md` §Setup mínimo](./WORKFLOW.md#setup-m%C3%A
 ## Princípios em uma linha cada
 
 - **Local-first** — Ollama na GPU para tudo que é mecânico e recorrente
+- **Linux-Native** — Otimizado para workflows nativos em Linux
 - **Assinatura antes de crédito** — Claude/Gemini antes de Pi/Kimi
 - **Determinístico antes de IA** — sed/jq/regex antes de modelo
 - **Uma fase por sessão** — STATUS.md como ponte entre sessões
@@ -72,7 +85,7 @@ Detalhes completos em [`WORKFLOW.md` §Setup mínimo](./WORKFLOW.md#setup-m%C3%A
 - [Claude Code CLI](https://docs.claude.com/en/docs/agents-and-tools/claude-code/overview)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
 - [Ollama](https://ollama.com)
-- Node.js 18+, Git, GPU NVIDIA pra Ollama (testado em GTX 5070 Ti / 16GB VRAM)
+- Node.js 18+, Git, GPU NVIDIA pra Ollama (testado em RTX 5070 Ti / 16GB VRAM)
 
 ---
 
