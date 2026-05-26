@@ -1,164 +1,78 @@
 # ai-dev-flow
 
-> Template de workflow de desenvolvimento com IA — Claude + Gemini CLI
+Como eu desenvolvo código com IA usando o ferramental que já tenho — Claude Code, Gemini CLI, Ollama local, Pi/OpenRouter — de forma prescriptiva e com custo controlado.
 
-Um repositório base para formalizar e padronizar o uso de modelos de IA (Claude e Gemini) em projetos de desenvolvimento de software. Inclui agentes especializados, system prompts otimizados, scripts de setup e guias de quando usar cada modelo.
-
----
-
-## O que é isso?
-
-Este repo é um **template de workflow** — não um projeto de software, mas a infraestrutura de processo que você clona, adapta ao seu projeto e usa como base para todos os seus projetos de desenvolvimento com IA.
-
-A ideia central: antes de escrever uma linha de código, você define arquitetura, fases e regras de interação com o modelo. Isso reduz custo, aumenta consistência e mantém o contexto organizado entre sessões.
+**Não é um framework.** É um **fluxo de trabalho**: convenções, receitas e alguns scripts curtos. Não há código TypeScript pra instalar, nem CLI pra construir.
 
 ---
 
-## Estrutura do repositório
+## Comece aqui
 
-```
-ai-dev-flow/
-├── README.md                        # Este arquivo
-│
-├── agents/
-│   ├── claude-agents.json           # Agentes Claude (Sonnet/Haiku)
-│   ├── gemini-agents.json           # Agentes Gemini (Pro/Flash)
-│   └── routing-rules.md             # Quando usar Claude vs Gemini
-│
-├── prompts/
-│   ├── system-prompt-claude.md      # System prompt para Claude Code CLI
-│   ├── system-prompt-gemini.md      # System prompt para Gemini CLI
-│   ├── refinement-agent.md          # Agente de refinamento de demandas
-│   └── templates/
-│       ├── ARCHITECTURE.md          # Template de arquitetura do projeto
-│       ├── PROMPT.md                # Template de instrução de implementação
-│       └── STATUS.md                # Template de tracking de progresso
-│
-├── scripts/
-│   ├── setup.sh                     # Setup inicial (Unix/Mac)
-│   ├── setup.ps1                    # Setup inicial (Windows)
-│   ├── claude-start.sh              # Wrapper para sessão Claude (Unix)
-│   ├── claude-start.ps1             # Wrapper para sessão Claude (Windows)
-│   ├── gemini-start.sh              # Wrapper para sessão Gemini (Unix)
-│   └── gemini-start.ps1             # Wrapper para sessão Gemini (Windows)
-│
-├── config/
-│   ├── claude-settings.json         # Configurações Claude CLI
-│   ├── gemini-settings.json         # Configurações Gemini CLI
-│   └── .env.example                 # Variáveis de ambiente necessárias
-│
-└── docs/
-    ├── workflow-guide.md            # Como usar este workflow
-    └── model-routing.md             # Guia detalhado de roteamento de modelos
-```
+📄 **[`WORKFLOW.md`](./WORKFLOW.md)** — o pager prescriptivo. Tarefa → ferramenta em 30 segundos. **Leia primeiro.**
+
+📁 **[`playbooks/`](./playbooks/)** — receitas markdown para tarefas comuns (new-feature, bug-investigation, refactor-module, code-review)
+
+📁 **[`local-helpers/`](./local-helpers/)** — scripts bash + PowerShell que chamam Ollama local para tarefas mecânicas (commit msg, diff summary, error explanation, code review)
+
+📁 **[`prompts/`](./prompts/)** — system prompts e templates dos 3-arquivos (ARCHITECTURE/PROMPT/STATUS) usados em projetos derivados
+
+📄 **[`cost.log`](./cost.log)** — log manual de uso pago (Pi/OpenRouter)
 
 ---
 
-## Quickstart
-
-### 1. Clone e configure
+## Setup rápido
 
 ```bash
-# Clone o template
-git clone https://github.com/seu-usuario/ai-dev-flow.git meu-projeto
-cd meu-projeto
+# CLIs
+npm install -g @anthropic-ai/claude-code @google/gemini-cli
+claude && gemini auth login
 
-# Execute o setup (instala CLIs, configura paths)
-chmod +x scripts/setup.sh
-./scripts/setup.sh
+# Ollama + modelos
+ollama pull qwen2.5-coder:7b qwen2.5-coder:14b llama3.2:3b gemma3:12b
+
+# Local helpers no PATH
+echo 'export PATH="$HOME/Dev/ai-flow/ai-dev-flow/local-helpers:$PATH"' >> ~/.bashrc
+chmod +x ~/Dev/ai-flow/ai-dev-flow/local-helpers/*.sh
 ```
 
-### 2. Refine sua demanda
-
-Use o agente de refinamento para transformar sua demanda em 3 arquivos estruturados:
-
-**Com Claude:**
-```bash
-claude --system-prompt-file prompts/refinement-agent.md --model sonnet
-```
-
-**Com Gemini:**
-```bash
-gemini --system-prompt-file prompts/refinement-agent.md --model gemini-2.5-pro
-```
-
-O agente vai gerar para o seu projeto:
-- `ARCHITECTURE.md` — design, decisões, ADRs
-- `PROMPT.md` — roadmap de implementação em fases
-- `STATUS.md` — tracking de progresso
-
-### 3. Inicie a implementação
-
-```bash
-# Usando Claude Code (recomendado para implementação)
-./scripts/claude-start.sh
-
-# Usando Gemini CLI (recomendado para análise de codebase grande)
-./scripts/gemini-start.sh
-```
+Detalhes completos em [`WORKFLOW.md` §Setup mínimo](./WORKFLOW.md#setup-m%C3%ADnimo).
 
 ---
 
-## Quando usar cada modelo
+## O que tem onde
 
-| Tarefa | Modelo recomendado | Por quê |
-|---|---|---|
-| Implementação de código | Claude Sonnet | Melhor qualidade de código, instruction-following |
-| Validação / linting | Claude Haiku | Rápido e barato para tarefas rotineiras |
-| Análise de codebase grande (>100k tokens) | Gemini 2.5 Pro | Context window de 2M tokens |
-| Pesquisa com dados recentes | Gemini 2.5 Flash | Search grounding nativo |
-| Análise de imagens/screenshots | Gemini 2.5 Pro | Multimodal superior |
-| Documentação técnica | Claude Haiku ou Gemini Flash | Custo-eficiente |
-| Decisões de arquitetura | Claude Sonnet | Raciocínio consistente |
-| Refatoração de arquivo único | Claude Sonnet | Edição precisa |
-
-Ver [`agents/routing-rules.md`](agents/routing-rules.md) para regras detalhadas.
-
----
-
-## Modelos disponíveis
-
-### Claude (Anthropic)
-| Modelo | String | Uso |
-|---|---|---|
-| Claude Sonnet 4.5 | `claude-sonnet-4-5` | Implementação, arquitetura |
-| Claude Haiku 4.5 | `claude-haiku-4-5-20251001` | Validação, docs, review |
-
-### Gemini (Google)
-| Modelo | String | Uso |
-|---|---|---|
-| Gemini 2.5 Pro | `gemini-2.5-pro` | Análise de codebase, multimodal |
-| Gemini 2.5 Flash | `gemini-2.5-flash` | Pesquisa, tarefas rápidas |
-| Gemini 2.0 Flash | `gemini-2.0-flash` | Budget, automações simples |
+| O quê | Onde |
+|---|---|
+| Decisão "tarefa → ferramenta" | [`WORKFLOW.md`](./WORKFLOW.md) |
+| Receitas reutilizáveis | [`playbooks/`](./playbooks/) |
+| Scripts Ollama | [`local-helpers/`](./local-helpers/) |
+| System prompts | [`prompts/`](./prompts/) |
+| Configs das CLIs | [`config/`](./config/) |
+| Setup scripts (per-OS) | [`scripts/`](./scripts/) |
+| Definições conceituais de agentes | [`agents/`](./agents/) |
+| Log de custo manual | [`cost.log`](./cost.log) |
+| Exploração arquitetural anterior (não construída) | [`docs/architecture/`](./docs/architecture/) — ver STATUS interno |
+| Iterações antigas consolidadas | [`docs/legacy/`](./docs/legacy/) |
 
 ---
 
-## Princípios do workflow
+## Princípios em uma linha cada
 
-1. **Contexto por referência** — nunca cole arquivos inteiros; referencie por path e linha
-2. **Uma fase por sessão** — segmente o trabalho; cada sessão = uma fase = um commit
-3. **Roteamento por complexidade** — use o modelo mais barato que resolve a tarefa
-4. **STATUS.md como ponte** — é o único arquivo que conecta sessões; mantenha atualizado
-5. **ADRs explícitos** — toda decisão arquitetural vai documentada no ARCHITECTURE.md
+- **Local-first** — Ollama na GPU para tudo que é mecânico e recorrente
+- **Assinatura antes de crédito** — Claude/Gemini antes de Pi/Kimi
+- **Determinístico antes de IA** — sed/jq/regex antes de modelo
+- **Uma fase por sessão** — STATUS.md como ponte entre sessões
+- **Playbook após o terceiro X** — só vira receita quando já fiz 3 vezes
+- **Sem framework próprio** — se virar plataforma, parar e ler [`docs/architecture/STATUS.md`](./docs/architecture/STATUS.md)
 
 ---
 
 ## Dependências
 
-- [Claude Code CLI](https://docs.claude.ai/cli) — `npm install -g @anthropic-ai/claude-code`
-- [Gemini CLI](https://github.com/google-gemini/gemini-cli) — `npm install -g @google/gemini-cli`
-- Node.js 18+
-- Git
-
-> **Sem API keys necessárias.** Ambas as CLIs autenticam via conta — Claude Code usa sua conta Claude.ai, Gemini CLI usa sua conta Google (`gemini auth login`). API keys só são necessárias se você for chamar as APIs diretamente via SDK.
-
----
-
-## Docs
-
-- [Workflow Guide](docs/workflow-guide.md) — como usar este workflow dia a dia
-- [Model Routing](docs/model-routing.md) — guia detalhado de seleção de modelos
-- [Refinement Agent](prompts/refinement-agent.md) — como transformar demandas em planos executáveis
+- [Claude Code CLI](https://docs.claude.com/en/docs/agents-and-tools/claude-code/overview)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- [Ollama](https://ollama.com)
+- Node.js 18+, Git, GPU NVIDIA pra Ollama (testado em GTX 5070 Ti / 16GB VRAM)
 
 ---
 

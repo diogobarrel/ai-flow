@@ -16,19 +16,12 @@ interpreter.llm.api_base = "http://localhost:11434"
 interpreter.llm.context_window = 16000
 interpreter.llm.temperature = 0.0
 
-# 5. System Message (High-priority instructions)
-interpreter.system_message = """You are an AI Software Engineer assistant.
+# 5. System Message
+interpreter.system_message = """You are a helpful AI assistant.
 # MANDATORY: NO JSON. NO TOOL CALLS. 
-# ONLY USE MARKDOWN CODE BLOCKS (```python or ```bash).
+# ONLY USE MARKDOWN CODE BLOCKS.
 
-WORKSPACE INFO:
-- Primary Dev Folder: C:\\Users\\santo\\Dev
-- Tech Stack: Python (FastAPI, LlamaIndex), Node.js (React), Go.
-- Tools: Git, NPM, Pytest.
-
-SAFETY RULES:
-1. ALWAYS confirm before deleting files or folders.
-2. Use relative paths when working inside a project directory.
+You help with general tasks, answering questions, and writing code to automate simple things.
 
 EXECUTION:
 - Provide the code in a markdown block.
@@ -45,4 +38,4 @@ interpreter.auto_run = False
 interpreter.offline = True
 
 # 8. Display message
-interpreter.display_message("> Profile `dev` loaded with Markdown enforcement.\n")
+interpreter.display_message("> Profile `default` loaded with Markdown enforcement.\n")
